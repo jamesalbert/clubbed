@@ -18,7 +18,6 @@ function [C,goodpixels] = decode(imageformat,start,stop,threshold)
 %  C : an array containing the decoded values (0..1023)
 %
 %  goodpixels : a binary image in which pixels that were decodedable across all images are marked with a 1.
-
 gbits = {};
 bits = {};
 images = [];
@@ -28,16 +27,15 @@ h = 0;
 w = 0;
 product = 1;
 
+% get all images in specified directory
 [status, list] = system( sprintf('for n in %s*; do echo "$n"; done', imageformat) );
 result = textscan( list, '%s', 'delimiter', '\n' );
-images = result{1};
+images = natsortfiles(result{1});
 
 realstart = 1;
-disp(start);
 if start ~= 1
   realstart = start*2-1;
 end
-disp([realstart stop*2]);
 images = images(realstart:stop*2);
 % compare brightness and get good pixels
 for i = 1:2:numel(images);

@@ -12,7 +12,7 @@ train_data_dir = 'data/train'
 validation_data_dir = 'data/validation'
 nb_train_samples = 320
 nb_validation_samples = 20
-epochs = 1
+epochs = 10
 batch_size = 5
 
 

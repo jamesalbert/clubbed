@@ -7,12 +7,12 @@ function [] = reconstruct(directory, threshold)
 
 rpath = sprintf('%s/r_', directory);
 lpath = sprintf('%s/l_', directory);
-camL.f = [ 1856.90556 1863.13475 ];
-camL.c = [ 1403.64394 869.11608 ];
-camR.f = [ 1844.49412 1843.96528 ];
-camR.c = [ 1376.02154 942.95783 ];
-[camL,xL,Xtrue] = calibrate_planar_ext(sprintf('%s/l_calib_01.jpg', directory), camL);
-[camR,xR,Xtrue] = calibrate_planar_ext(sprintf('%s/r_calib_01.jpg', directory), camR);
+camL.f = [ 913.60075   796.60258 ];
+camL.c = [ 1367.50000   911.50000 ];
+camR.f = [ 1720.54076   1448.28734 ];
+camR.c = [ 1367.50000   911.50000 ];
+[camL,xL,Xtrue] = calibrate_planar_ext(sprintf('%s/left_rgb_bg.jpg', directory), camL);
+[camR,xR,Xtrue] = calibrate_planar_ext(sprintf('%s/right_rgb_bg.jpg', directory), camR);
 % load each image set
 disp('processing image set 1');
 [Rv_C, Rv_goodpixels] = decode(rpath, 1, 10, threshold);
@@ -22,7 +22,7 @@ disp('processing image set 3');
 [Lv_C, Lv_goodpixels] = decode(lpath, 1, 10, threshold);
 disp('processing image set 4');
 [Lh_C, Lh_goodpixels] = decode(lpath, 11, 20, threshold);
-[h w] = size(rgb2gray(im2double(imread(strcat(lpath, '01.jpg')))));
+[h w] = size(rgb2gray(im2double(imread(strcat(lpath, '1.jpg')))));
 
 R_C = Rh_C + 1024*Rv_C;    % combine the horizontal and vertical coordinates into a single (20 bit) code in [0...1048575]
 L_C = Lh_C + 1024*Lv_C;
@@ -44,6 +44,7 @@ L_sub_matched = L_sub(iL);
 X = triangulate(xL, xR, camL, camR);
 disp('saving to reconstruct.mat...');
 save('reconstruct.mat', 'X', 'xL', 'xR');
+figure(3);
 axis([-10 50 -10 50 -10 50]);
 plot3(X(1,:), X(2,:), X(3,:), '.');
 subplot(2,2,1);

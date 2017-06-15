@@ -2,24 +2,69 @@
 
 ## Matlab
 
-While this library is primarily written in Python, but there are complement Matlab scripts used for scanning a hand and creating a three-dimensional mesh. The recommended way of running this library would be do the following inside the root Matlab directory:
+While this library is primarily written in Python, there are complement Matlab scripts used for scanning a hand and creating a three-dimensional mesh. It then takes 17 images of the hand; 1 image every 20 degrees. The recommended way of running this library would be do the following inside the root Matlab directory:
 
 ```
 user@/MATLAB$ git clone https://github.com/jamesalbert/clubbed.git
-user@/MATLAB/clubbed$ cd clubbed
 ```
 
-## Setup
-
-`pip install -r requirements.txt`
-
-## Example
+then in the **Matlab console**:
 
 ```
-python train.py
-python optimize.py
-python tune.py
-python predict.py <number-of-test-files>
+$ cd clubbed/demos
+$ demoscript.m
 ```
 
-where `<number-of-test-files>` is the number of files inside `data/test/observed`
+You'll notice there is a 4-subplot figure still open; that's only for debugging purposes. Feel free to close it. You now have an 360-degree rotation video of the mesh at `data/hand/test.mp4`. Now we need to extract the video in the terminal, run:
+
+```
+user@/MATLAB$ python utils/extract.py data/hand
+```
+
+There should now be a folder called `data/hand/observed` with the 17 images. This is where python takes over.
+
+## Python
+
+Install the dependencies
+
+```
+user@/MATLAB$ pip install -r requirements.txt
+```
+
+Run the demo (but don't run it just yet)
+
+```
+user@/MATLAB$ ./demos/demoscript.sh
+```
+
+`demoscript.sh`
+```
+#!/usr/bin/env bash
+set -e
+if [[ "$(pwd)" == *"demos"* ]]; then
+  cd ..
+fi
+
+echo 'TRAINING...'
+python python/train.py
+
+echo 'OPTIMIZING...'
+python python/optimize.py
+
+echo 'FINE TUNING...'
+python python/tune.py
+
+echo 'TESTING...'
+python python/predict.py data/test 2 # predict 2 images in data/test
+
+echo 'PREDICTING...'
+python python/predict.py data/hand 17 # predict 17 images in data/hand
+```
+
+All it is is a wrapper around the scripts in `python/`. At the end (in about 15 minutes), there will be a list of 17 probabilities on whether the image resembles a clubbed finger. **NOTE:** since this build takes so long, I've included the *.npy and *.h5 files that are required. Now you can just run:
+
+```
+user@/MATLAB$ python python/predict.py data/test 2
+```
+
+The low probability is the non-clubbed finger and the high probability is the clubbed finger.
