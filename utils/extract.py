@@ -4,7 +4,6 @@ import sys
 
 import cv2
 
-print(cv2.__version__)
 if len(sys.argv) < 2:
     print('usage: ./extract.py <path-to-video>')
     exit(1)
