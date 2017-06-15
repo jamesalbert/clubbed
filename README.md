@@ -12,7 +12,7 @@ then in the **Matlab console**:
 
 ```
 $ cd clubbed/demos
-$ demoscript.m
+$ demoscript
 ```
 
 You'll notice there is a 4-subplot figure still open; that's only for debugging purposes. Feel free to close it. You now have an 360-degree rotation video of the mesh at `data/hand/test.mp4`. Now we need to extract the video in the terminal, this is where python takes over.
