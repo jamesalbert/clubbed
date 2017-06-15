@@ -1,9 +1,5 @@
-function [] = mesh(threshold)
+function [] = mesh()
 % render the mesh loaded in by `reconstruct.mat`
-% Input:
-%
-%  threshold : a factor of the mean of all distances between edges. I found
-%              the best results with threshold=6
 load('reconstruct.mat', 'X', 'xL', 'xR');
 
 tri = delaunay(xL(1,:), xL(2,:)).';

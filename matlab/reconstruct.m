@@ -6,6 +6,7 @@ function [] = reconstruct(directory, threshold)
 %             pixel is marked as undecodeable.
 
 if exist('reconstruct.mat', 'file') == 2
+else
   fprintf('info: reconstruct.mat (containing X, xL, and xR) exists\n');
   return;
 end
