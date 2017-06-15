@@ -5,6 +5,10 @@ function [] = reconstruct(directory, threshold)
 %             and negative images.  if the absolute difference doesn't exceed this value, the
 %             pixel is marked as undecodeable.
 
+if exist('reconstruct.mat', 'file') == 2
+  fprintf('info: reconstruct.mat (containing X, xL, and xR) exists\n');
+  return;
+end
 rpath = sprintf('%s/r_', directory);
 lpath = sprintf('%s/l_', directory);
 camL.f = [ 913.60075   796.60258 ];
