@@ -39,7 +39,7 @@ Run the demo (but don't run it just yet!)
 user@/MATLAB$ ./demos/demoscript.sh
 ```
 
-**demoscript.sh**
+Take a look at `demoscript.sh`:
 ```
 #!/usr/bin/env bash
 set -e
