@@ -5,8 +5,7 @@ function [] = reconstruct(directory, threshold)
 %             and negative images.  if the absolute difference doesn't exceed this value, the
 %             pixel is marked as undecodeable.
 
-if exist('reconstruct.mat', 'file') == 2
-else
+if exist('./reconstruct.mat', 'file') == 2
   fprintf('info: reconstruct.mat (containing X, xL, and xR) exists\n');
   return;
 end
